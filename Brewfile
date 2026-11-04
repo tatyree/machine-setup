@@ -1,8 +1,6 @@
 tap "clojure/tools"
-tap "gabotechs/taps"
 tap "getsentry/tools"
 tap "hashicorp/tap"
-tap "homebrew/services"
 tap "minio/stable"
 tap "redis-stack/redis-stack"
 # Search tool like grep, but optimized for programmers
@@ -154,7 +152,6 @@ brew "pdfgrep"
 brew "postgresql@16"
 brew "pwgen"
 # Interpreted, interactive, object-oriented programming language
-brew "python@3.11"
 # Tools for and transforming and inspecting PDF files
 brew "qpdf"
 # Rsync for cloud storage
@@ -197,7 +194,6 @@ brew "wget"
 brew "yq"
 # Debugger for zsh
 brew "zshdb"
-brew "gabotechs/taps/musicgpt", trusted: true
 # Terraform
 brew "hashicorp/tap/terraform", trusted: true
 # 3D creation suite
@@ -228,7 +224,6 @@ cask "font-ubuntu-mono-nerd-font"
 # Terminal emulator that uses platform-native UI and GPU acceleration
 cask "ghostty"
 # Free and open-source image editor
-cask "gimp"
 # Web browser
 cask "google-chrome"
 # Client for the Google Drive storage service
@@ -246,13 +241,10 @@ cask "kaleidoscope"
 # End-to-end encryption software
 cask "keybase"
 # Password manager
-cask "lastpass"
 # Multiplayer online battle arena game
-cask "league-of-legends"
 # Full TeX Live distribution with GUI applications
 cask "mactex"
 # Online collaborative whiteboard platform
-cask "miro"
 # Open-source software for live streaming and screen recording
 cask "obs"
 # Desktop virtualization software
@@ -277,7 +269,6 @@ cask "unity-hub"
 cask "utm"
 # Open-source code editor
 # Multimedia player
-cask "vlc"
 # GPU-accelerated cross-platform terminal emulator and multiplexer
 cask "wezterm"
 # Native desktop client for WhatsApp

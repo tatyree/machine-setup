@@ -6,15 +6,20 @@ Taken from the Mac Studio (macOS 15.5, arm64) on 2026-11-01.
 
 | Type | Count |
 |---|---|
-| tap | 7 |
-| brew | 99 (includes `chezmoi`, `mas`, `git-lfs`, `postgresql@16`) |
-| cask | 51 (includes `1password`, `1password-cli`) |
+| tap | 5 |
+| brew | 97 (includes `chezmoi`, `mas`, `git-lfs`, `postgresql@16`) |
+| cask | 46 (includes `1password`, `1password-cli`) |
 | mas | 17 |
 | npm | 6 |
 
-Deliberately left out: casks blender, chatgpt, commandpost, intellij-idea,
-iterm2, parallels, redis-stack-server, visual-studio-code, windsurf; formulae
-mpv (the cask is used), postgresql@14, borgbackup.
+Deliberately left out: casks blender, chatgpt, commandpost, gimp,
+intellij-idea, iterm2, lastpass, league-of-legends, miro, parallels,
+redis-stack-server, visual-studio-code, vlc, windsurf; formulae mpv (the cask
+is used), postgresql@14, borgbackup, python@3.11 (asdf manages Python).
+
+Taps dropped: `homebrew/services` (deprecated; `brew services` is built into
+Homebrew now) and `gabotechs/taps` (fails to tap), which also drops its
+`musicgpt` formula.
 
 ### Apps with no cask (manual install)
 
