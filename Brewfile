@@ -252,7 +252,6 @@ cask "obs"
 cask "rar"
 # Redis Stack Server install a Redis server with additional database capabilities
 # Instant messaging application focusing on security
-cask "signal"
 # Utility to resize and position application windows
 cask "sizeup"
 # Team communication and collaboration software
