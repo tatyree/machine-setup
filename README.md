@@ -29,7 +29,10 @@ On the first run, any existing file chezmoi is about to replace (`~/.zshrc`,
 `<file>.pre-machine-setup` first. On later runs chezmoi asks before replacing
 a file you have edited since it last wrote it.
 
-Options: `--skip-projects`, `--skip-macos`.
+Options: `--skip-projects`, `--skip-macos`, `--skip-mas`.
+
+Mac App Store apps install last, one at a time with progress, after the
+App Store sign-in (iCloud can stay off). Xcode alone is a long download.
 
 ## 1Password
 

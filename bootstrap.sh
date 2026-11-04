@@ -5,15 +5,18 @@
 # Options:
 #   --skip-projects   don't clone the repos in projects.txt
 #   --skip-macos      don't apply macos.sh
+#   --skip-mas        don't install the Mac App Store apps (the mas lines in Brewfile)
 set -euo pipefail
 
 REPO_DIR="$(cd "$(dirname "$0")" && pwd)"
 SKIP_PROJECTS=0
 SKIP_MACOS=0
+SKIP_MAS=0
 while [ $# -gt 0 ]; do
   case "$1" in
     --skip-projects) SKIP_PROJECTS=1 ;;
     --skip-macos) SKIP_MACOS=1 ;;
+    --skip-mas) SKIP_MAS=1 ;;
     *) echo "Unknown option: $1" >&2; exit 2 ;;
   esac
   shift
@@ -38,10 +41,11 @@ if ! command -v brew >/dev/null 2>&1 && [ ! -x /opt/homebrew/bin/brew ]; then
 fi
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
-# 3. Packages. App Store entries need the App Store signed in first.
-step "Brewfile"
-pause "Sign in to the App Store app now so the mas entries can install."
-brew bundle --file="$REPO_DIR/Brewfile" --no-upgrade || warn "brew bundle had failures; re-run 'brew bundle --file=$REPO_DIR/Brewfile' to see them"
+# 3. Packages. App Store apps are installed separately at the end (step 12),
+#    because big ones like Xcode download for a long time with no output here.
+step "Brewfile (without App Store apps)"
+grep -v '^mas ' "$REPO_DIR/Brewfile" | brew bundle --file=- --no-upgrade \
+  || warn "brew bundle had failures; re-run 'brew bundle --file=$REPO_DIR/Brewfile' to see them"
 
 # 4. 1Password (SSH agent)
 step "1Password"
@@ -130,6 +134,23 @@ if [ "$SKIP_MACOS" -eq 0 ]; then
   "$REPO_DIR/macos.sh"
 fi
 
+# 12. Mac App Store apps, one at a time so progress is visible.
+if [ "$SKIP_MAS" -eq 0 ]; then
+  step "Mac App Store apps"
+  pause "Sign in to the App Store app (Store > Sign In; iCloud can stay off)."
+  installed_mas="$(mas list 2>/dev/null | awk '{print $1}')"
+  while IFS= read -r line; do
+    name="$(sed -E 's/^mas "([^"]+)".*/\1/' <<<"$line")"
+    id="$(sed -E 's/.*id: *([0-9]+).*/\1/' <<<"$line")"
+    if grep -qx "$id" <<<"$installed_mas"; then
+      echo "  already installed: $name"
+      continue
+    fi
+    echo "  installing $name ($id)..."
+    mas install "$id" || warn "App Store install failed for $name: open it in the App Store and click Get once, then re-run with 'mas install $id'"
+  done < <(grep '^mas ' "$REPO_DIR/Brewfile")
+fi
+
 step "Done"
 if [ "${#WARNINGS[@]}" -gt 0 ]; then
   echo "Warnings:"
@@ -140,7 +161,7 @@ cat <<'EOF'
 Still to do by hand:
   - Sign in: Chrome, Google Drive, Keybase, Slack, WhatsApp
   - gh auth login; gcloud auth login
-  - Licences: Kaleidoscope, SizeUp
+  - Licences: Kaleidoscope
   - Apps with no cask: see INVENTORY.md, "Apps with no cask"
   - Privacy permissions: Full Disk Access, Screen Recording, Accessibility,
     Camera and Microphone for terminals, OBS, Zoom

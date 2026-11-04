@@ -14,7 +14,8 @@ Taken from the Mac Studio (macOS 15.5, arm64) on 2026-11-01.
 
 Deliberately left out: casks blender, chatgpt, commandpost, duckduckgo,
 gimp, intellij-idea, iterm2, lastpass, league-of-legends, miro, parallels,
-redis-stack-server, signal, softraid, tor-browser, visual-studio-code, vlc, windsurf; formulae mpv (the cask
+redis-stack-server, signal, sizeup (replaced by rectangle), softraid,
+tor-browser, visual-studio-code, vlc, windsurf; formulae mpv (the cask
 is used), postgresql@14, borgbackup, python@3.11 (asdf manages Python).
 
 Taps dropped: `homebrew/services` (deprecated; `brew services` is built into

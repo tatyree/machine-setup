@@ -253,7 +253,7 @@ cask "rar"
 # Redis Stack Server install a Redis server with additional database capabilities
 # Instant messaging application focusing on security
 # Utility to resize and position application windows
-cask "sizeup"
+cask "rectangle"
 # Team communication and collaboration software
 cask "slack"
 # Powerful and intuitive software RAID utility
