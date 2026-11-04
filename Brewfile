@@ -259,7 +259,6 @@ cask "android-file-transfer"
 cask "balenaetcher"
 cask "mpv"
 cask "redis-insight"
-cask "session"
 
 # Mac App Store (needs App Store sign-in first)
 brew "mas"
