@@ -180,7 +180,7 @@ fi
 cat <<'EOF'
 
 Still to do by hand:
-  - Sign in: Chrome, Google Drive, Keybase, Slack, WhatsApp
+  - Sign in: Chrome, Keybase, Slack, WhatsApp
   - gh auth login; gcloud auth login
   - Licences: Kaleidoscope
   - Apps with no cask: see INVENTORY.md, "Apps with no cask"

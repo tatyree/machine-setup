@@ -21,7 +21,6 @@ brew "aspell"
 brew "boost"
 # Cryptography and SSL/TLS Toolkit
 brew "openssl@3", link: true
-# Deduplicating archiver with compression and authenticated encryption
 # Tool for embedding, validating, and exporting BWF file metadata
 brew "bwfmetaedit"
 # Core application library for C
@@ -128,7 +127,6 @@ brew "mkvtoolnix"
 brew "vapoursynth"
 # Feature-rich command-line audio/video downloader
 brew "yt-dlp"
-# Media player based on MPlayer and mplayer2
 # FTP client with an advanced user interface
 brew "ncftp"
 # Ambitious Vim-fork focused on extensibility and agility
@@ -147,11 +145,9 @@ brew "pandoc"
 brew "poppler"
 # Search PDFs for strings matching a regular expression
 brew "pdfgrep"
-# Object-relational database system
 # Password generator
 brew "postgresql@16"
 brew "pwgen"
-# Interpreted, interactive, object-oriented programming language
 # Tools for and transforming and inspecting PDF files
 brew "qpdf"
 # Rsync for cloud storage
@@ -196,8 +192,6 @@ brew "yq"
 brew "zshdb"
 # Terraform
 brew "hashicorp/tap/terraform", trusted: true
-# 3D creation suite
-# OpenAI's official ChatGPT desktop app
 # Automated testing of webapps for Google Chrome
 cask "chromedriver"
 # UI for creating Windows installer ISO from UUPDump
@@ -206,8 +200,6 @@ cask "crystalfetch"
 cask "db-browser-for-sqlite"
 # Agentic IDE with AI agent command center
 cask "devin-desktop"
-# App to build and share containerised applications and microservices
-cask "docker-desktop"
 # Collaborative abstract artwork software
 cask "electric-sheep"
 # Web browser
@@ -223,49 +215,32 @@ cask "font-space-mono-nerd-font"
 cask "font-ubuntu-mono-nerd-font"
 # Terminal emulator that uses platform-native UI and GPU acceleration
 cask "ghostty"
-# Free and open-source image editor
 # Web browser
 cask "google-chrome"
-# Client for the Google Drive storage service
-cask "google-drive"
 # Graphically shows disk usage within a file system
 cask "grandperspective"
 # Open-source video transcoder
 cask "handbrake-app"
 # Free and open-source media player
 cask "iina"
-# Java IDE by JetBrains
-# Terminal emulator as alternative to Apple's Terminal app
 # Spot and merge differences in text and image files or folders
 cask "kaleidoscope"
 # End-to-end encryption software
 cask "keybase"
-# Password manager
-# Multiplayer online battle arena game
-# Full TeX Live distribution with GUI applications
-cask "mactex"
-# Online collaborative whiteboard platform
 # Open-source software for live streaming and screen recording
 cask "obs"
-# Desktop virtualization software
 # Archive manager for data compression and backups
 cask "rar"
-# Redis Stack Server install a Redis server with additional database capabilities
-# Instant messaging application focusing on security
 # Utility to resize and position application windows
 cask "rectangle"
 # Team communication and collaboration software
 cask "slack"
-# Powerful and intuitive software RAID utility
-# Web browser focusing on security
 # Platform for 3D content
 cask "unity"
 # Management tool for Unity
 cask "unity-hub"
 # Virtual machines UI using QEMU
 cask "utm"
-# Open-source code editor
-# Multimedia player
 # GPU-accelerated cross-platform terminal emulator and multiplexer
 cask "wezterm"
 # Native desktop client for WhatsApp
