@@ -140,7 +140,7 @@ cat <<'EOF'
 Still to do by hand:
   - Sign in: Chrome, Google Drive, Keybase, Slack, Signal, WhatsApp
   - gh auth login; gcloud auth login
-  - Licences: Kaleidoscope, SizeUp, SoftRAID
+  - Licences: Kaleidoscope, SizeUp
   - Apps with no cask: see INVENTORY.md, "Apps with no cask"
   - Privacy permissions: Full Disk Access, Screen Recording, Accessibility,
     Camera and Microphone for terminals, OBS, Zoom

@@ -258,9 +258,7 @@ cask "sizeup"
 # Team communication and collaboration software
 cask "slack"
 # Powerful and intuitive software RAID utility
-cask "softraid"
 # Web browser focusing on security
-cask "tor-browser"
 # Platform for 3D content
 cask "unity"
 # Management tool for Unity
@@ -287,7 +285,6 @@ cask "1password"
 cask "1password-cli"
 cask "android-file-transfer"
 cask "balenaetcher"
-cask "duckduckgo"
 cask "mpv"
 cask "redis-insight"
 cask "session"
