@@ -64,6 +64,27 @@ sourceDir = "$REPO_DIR"
 [data]
     onepassword = $ONEPASSWORD
 EOF
+
+# First run only (chezmoi has never applied here): copy every existing file
+# chezmoi is about to replace to <file>.pre-machine-setup. Later runs rely on
+# chezmoi's own prompt for files edited since it last wrote them.
+if [ ! -e "$HOME/.config/chezmoi/chezmoistate.boltdb" ]; then
+  ts="$(date +%Y%m%d-%H%M%S)"
+  # Status lines are "XY path"; Y = M means apply would modify an existing target.
+  while IFS= read -r line; do
+    [ "${line:1:1}" = M ] || continue
+    rel="${line:3}"
+    target="$HOME/$rel"
+    [ -e "$target" ] || [ -L "$target" ] || continue
+    backup="$target.pre-machine-setup"
+    [ -e "$backup" ] || [ -L "$backup" ] && backup="$backup.$ts"
+    if cp -pPR "$target" "$backup"; then
+      echo "  backed up ~/$rel -> ~/${backup#"$HOME"/}"
+    else
+      warn "Could not back up ~/$rel; chezmoi will still ask before replacing it"
+    fi
+  done < <(chezmoi status --include=files,symlinks 2>/dev/null || true)
+fi
 chezmoi apply
 
 # 6. Rust (.zshenv sources ~/.cargo/env)

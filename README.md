@@ -24,6 +24,11 @@ clones `projects.txt`, starts Homebrew services and applies `macos.sh`.
 It pauses for the App Store sign-in and for 1Password, then prints warnings
 and the remaining manual steps.
 
+On the first run, any existing file chezmoi is about to replace (`~/.zshrc`,
+`~/.gitconfig`, the nvim config, and so on) is copied to
+`<file>.pre-machine-setup` first. On later runs chezmoi asks before replacing
+a file you have edited since it last wrote it.
+
 Options: `--skip-projects`, `--skip-macos`.
 
 ## 1Password
