@@ -227,8 +227,6 @@ cask "iina"
 cask "kaleidoscope"
 # End-to-end encryption software
 cask "keybase"
-# Open-source software for live streaming and screen recording
-cask "obs"
 # Archive manager for data compression and backups
 cask "rar"
 # Utility to resize and position application windows

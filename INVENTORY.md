@@ -8,15 +8,15 @@ Taken from the Mac Studio (macOS 15.5, arm64) on 2026-11-01.
 |---|---|
 | tap | 5 |
 | brew | 97 (includes `chezmoi`, `mas`, `git-lfs`, `postgresql@16`) |
-| cask | 39 (includes `1password`, `1password-cli`) |
+| cask | 38 (includes `1password`, `1password-cli`) |
 | mas | 17 |
 | npm | 6 |
 
 Deliberately left out: casks blender, chatgpt, commandpost, docker-desktop,
 duckduckgo, gimp, google-drive, intellij-idea, iterm2, lastpass,
-league-of-legends, mactex, miro, parallels, redis-stack-server, signal, sizeup
-(replaced by rectangle), softraid, tor-browser, visual-studio-code, vlc,
-windsurf; formulae mpv (the cask is used), postgresql@14, borgbackup,
+league-of-legends, mactex, miro, obs, parallels, redis-stack-server, signal,
+sizeup (replaced by rectangle), softraid, tor-browser, visual-studio-code,
+vlc, windsurf; formulae mpv (the cask is used), postgresql@14, borgbackup,
 python@3.11 (asdf manages Python).
 
 Taps dropped: `homebrew/services` (deprecated; `brew services` is built into

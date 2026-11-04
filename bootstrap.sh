@@ -185,5 +185,5 @@ Still to do by hand:
   - Licences: Kaleidoscope
   - Apps with no cask: see INVENTORY.md, "Apps with no cask"
   - Privacy permissions: Full Disk Access, Screen Recording, Accessibility,
-    Camera and Microphone for terminals, OBS, Zoom
+    Camera and Microphone for terminals and Zoom
 EOF
