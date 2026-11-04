@@ -1,0 +1,65 @@
+[user]
+	name = TA Tyree
+	email = tatyree@gmail.com
+[push]
+  default = simple
+[core]
+  excludesfile = {{ .chezmoi.homeDir }}/.gitignore_global
+[difftool "Kaleidoscope"]
+  cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
+[difftool]
+  prompt = false
+[diff]
+  tool = Kaleidoscope
+[mergetool "Kaleidoscope"]
+  cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" \"$REMOTE\"
+[mergetool]
+  prompt = false
+[merge]
+  tool = Kaleidoscope
+[alias]
+  br = branch
+  ci = commit
+  co = checkout
+  d  = diff
+  wdiff           = diff --color-words
+  st = status -sb
+  amend = commit --amend
+  pr = pull --rebase
+  fu = checkout -f
+  hist = log --all --graph --pretty='[%C(cyan)%h%Creset]%C(bold cyan)%d%Creset %s'
+  lp = log -p
+  tst = status
+  al  = config --get-regexp "alias"
+[color]
+  ui = true
+[help]
+  autocorrect = 3
+[diff]
+  renames = true
+[rebase]
+  autosquash = true
+[url "git@github.com:DFE-Digital/"]
+  insteadOf = "dfe:"
+[url "git@github.com:"]
+  insteadOf = "gh:"
+  pushInsteadOf = "github:"
+  pushInsteadOf = "git://github.com/"
+[url "git://github.com/"]
+  insteadOf = "github:"
+[url "git@gist.github.com:"]
+  insteadOf = "gst:"
+  pushInsteadOf = "gist:"
+  pushInsteadOf = "git://gist.github.com/"
+[url "git://gist.github.com/"]
+  insteadOf = "gist:"
+[commit]
+  gpgsign = false
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+
+[init]
+	defaultBranch = master

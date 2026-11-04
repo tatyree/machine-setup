@@ -1,0 +1,39 @@
+# Starship configuration
+
+# Increase command timeout to 5000ms (5 seconds) for NAS-based git repos
+# Default is 500ms, but NAS can be slow
+command_timeout = 5000
+
+# Git module optimizations for NAS
+[git_status]
+disabled = false
+# Ignore submodules when checking for dirty
+ignore_submodules = true
+# Remove ahead/behind indicators to avoid remote checks
+ahead = ""
+behind = ""
+diverged = ""
+# Keep other indicators minimal
+stashed = ""  # Empty string hides stashed count
+# Use git executable might be faster for NAS in some cases
+# use_git_executable = true  # Uncomment to try if still slow
+
+[git_state]
+disabled = false
+
+[git_metrics]
+disabled = true  # Disable git metrics to speed up prompt
+
+# Directory module optimization
+[directory]
+truncation_length = 3
+truncate_to_repo = true  # Truncate to git repo root
+# Faster directory reading
+read_only = " 🔒"
+
+# You can also disable git entirely for specific directories
+# by creating a .starship file in those directories with:
+# disabled = true
+
+# You can customize your prompt here
+# See https://starship.rs/config/ for all options

@@ -1,0 +1,112 @@
+path+=/opt/homebrew/bin
+path+=/usr/local/bin
+path+="$HOME/.local/bin"
+export PATH=".git/safe/../../bin:$PATH"
+# export PATH=$HOE/bin:/usr/local/bin:/usr/local/sbin:$PATH
+path+=.git/safe/../../bin
+export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
+
+# Until I can work out how to make homebrew and multiple users play nicely
+# without group write permisisons.
+export ZSH_DISABLE_COMPFIX=true
+
+export ZSH="{{ .chezmoi.homeDir }}/.oh-my-zsh"
+# ZSH_THEME="robbyrussell"  # Disabled - using Starship instead
+
+if [[ -a ~/.secrets ]]; then
+  source ~/.secrets
+fi
+
+source $ZSH/oh-my-zsh.sh
+
+plugins=(asdf history)
+
+# Define path variables
+arch='/Volumes/archived'
+
+# Machine-specific additions
+for f in ~/.zshrc.d/*.zsh(N); do
+  source "$f"
+done
+
+# Source aliases and functions from dedicated files
+if [[ -a ~/.zsh_aliases ]]; then
+  source ~/.zsh_aliases
+fi
+
+if [[ -a ~/.zsh_functions ]]; then
+  source ~/.zsh_functions
+fi
+
+
+# Function to handle directory-specific plugin loading
+function chpwd() {
+  if [[ -f ./.zshrc_local ]]; then
+    source ./.zshrc_local
+  fi
+}
+
+# Load chpwd on shell start
+chpwd
+export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@3)"
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init -)"
+fi
+
+
+HISTFILE=~/.zsh_history
+HISTSIZE=99999
+HISTFILESIZE=999999
+SAVEHIST=$HISTSIZE
+setopt SHARE_HISTORY
+
+autoload -z edit-command-line
+zle -N edit-command-line
+bindkey "^X^E" edit-command-line
+
+export ZSH_TMUX_AUTOSTART=true
+export EDITOR=vim
+
+path=('./bin' $path)
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '{{ .chezmoi.homeDir }}/google-cloud-sdk/path.zsh.inc' ]; then . '{{ .chezmoi.homeDir }}/google-cloud-sdk/path.zsh.inc'; fi
+if [ -f '{{ .chezmoi.homeDir }}/google-cloud-sdk/completion.zsh.inc' ]; then . '{{ .chezmoi.homeDir }}/google-cloud-sdk/completion.zsh.inc'; fi
+
+#export PROMPT="%{$fg[magenta]%}%n%{$reset_color%}@%{$fg[blue]%}%m %{$fg[yellow]%}%1~ %{$reset_color%}%# "
+autoload -Uz zmv
+autoload -Uz compinit
+compinit
+zstyle ':completion:*' menu select
+zstyle ':completion::complete:*' gain-privileges 1
+
+export CLOUDSDK_PYTHON=python3
+export CLOUDSDK_PYTHON_SITEPACKAGES=1
+
+setopt extended_history       # record timestamp of command in HISTFILE
+setopt hist_expire_dups_first # delete duplicates first when HISTFILE size exceeds HISTSIZE
+setopt hist_ignore_dups       # ignore duplicated commands history list
+setopt hist_ignore_space      # ignore commands that start with space
+setopt hist_verify            # show command with history expansion to user before running it
+setopt inc_append_history     # add commands to HISTFILE in order of execution
+setopt share_history
+
+bindkey "^[d" kill-word
+
+# The following lines have been added by Docker Desktop to enable Docker CLI completions.
+fpath=({{ .chezmoi.homeDir }}/.docker/completions $fpath)
+autoload -Uz compinit
+compinit
+# End of Docker CLI completions
+
+export COMPOSE_BAKE=1
+
+# Initialize Starship prompt
+eval "$(starship init zsh)"
+export PATH="$HOME/.local/bin:$PATH"
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
+
+# Prompt before overwriting an existing file
+alias mv='mv -i'

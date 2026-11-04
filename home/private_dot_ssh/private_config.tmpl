@@ -1,0 +1,11 @@
+# Machine-specific host blocks. Must stay above "Host *".
+Include config.d/*
+
+Host *
+{{- if index . "onepassword" }}
+  IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+{{- else }}
+  UseKeychain yes
+  AddKeysToAgent yes
+  IdentityFile ~/.ssh/id_rsa
+{{- end }}

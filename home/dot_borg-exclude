@@ -1,0 +1,61 @@
+# OS generated files and directories
+/Users/*/Library/Caches/*
+/Users/*/Library/Logs/*
+/Users/*/Library/Preferences/*
+/private/var/*
+/System/Library/*
+!/System/Library/CoreServices/*
+/.Spotlight-V100/*
+/.fseventsd/*
+
+# Applications
+/Applications/*
+
+# Caches and temporary files
+*/.Cache/*
+*/.Trash/*
+*/.npm/*
+*/.gem/*
+
+# Logs
+/private/var/log/*
+/Library/Logs/*
+
+*.plist
+*-proxy-*
+*.BIN
+*.C00*
+*.INP
+*.INT
+*.LRV
+*.THM
+*.bak
+*.gstmp
+*.segments*
+*/.FF
+*/.DS_Store
+*/AVF_INFO/*
+*/CacheClip/*
+*/Proxy/*
+*/synoreport/*
+*@Syno*
+*@eaDir*
+*Get_started_with_GoPro.url
+*Trash
+*recycle*
+*timemachine*
+.DS_Store
+.DocumentRevisions-V100
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+._M_*
+._NINJA*
+.fcpcache
+.fseventsd/
+Final Cut Original Media/
+Final Cut Proxy Media/
+Render Files/
+Transcoded Media/
+node_modules/*
+test-release/*

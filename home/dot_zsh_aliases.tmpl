@@ -1,0 +1,18 @@
+# ~/.zsh_aliases
+# Organized aliases for zsh
+
+# ===== Navigation =====
+alias ll="ls -lh"
+alias op='open "$(pwd)"'
+alias scr="cd /Volumes/scratch"
+
+# ===== Utility =====
+alias sed='gsed'
+alias rsy="rsync --exclude-from '{{ .chezmoi.homeDir }}/.borg-exclude' --progress -avt"
+alias encodeLog="tail -n 1 -F /tmp/encode.log"
+alias history="history 1"
+alias tmx="tmux at || tmux"
+
+# ===== Configuration =====
+alias zshconfig="vim ~/.zshrc; source ~/.zshrc"
+alias ohmyzsh="vim ~/.oh-my-zsh"

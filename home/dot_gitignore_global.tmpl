@@ -1,0 +1,150 @@
+.claude/
+BORG_BACKUP_DATES.csv
+*.bak
+*.orig
+.DS_Store
+tag
+:x
+.bundle
+.bundle/*
+*.orig
+capybara*.html
+tmp/*
+./tmp
+./tmp/*
+vendor/bundle
+vendor/gems
+*.swp
+._*
+quickfix.out
+.env*
+*cache/*
+.ssh/known_hosts
+.ssh/environment-*
+.ssh/authorized_keys
+node_modules/*
+yarn/global/node_modules/*
+.firebase/*
+credentials.json
+token.json
+cypress/screenshots/*
+.wrangler
+*.fixed
+serviceAccountKey.json
+
+### Video ###
+*.3g2
+*.3gp
+*.asf
+*.asx
+*.avi
+*.flv
+*.mkv
+*.mov
+*.mp4
+*.mpg
+*.ogv
+*.rm
+*.swf
+*.vob
+*.wmv
+*.webm
+
+# Created by https://www.toptal.com/developers/gitignore/api/images
+# Edit at https://www.toptal.com/developers/gitignore?templates=images
+
+### Images ###
+# HEIC
+*.heic
+*.HEIC
+
+# JPEG
+*.jpg
+*.jpeg
+*.jpe
+*.jif
+*.jfif
+*.jfi
+
+# JPEG 2000
+*.jp2
+*.j2k
+*.jpf
+*.jpx
+*.jpm
+*.mj2
+
+# JPEG XR
+*.jxr
+*.hdp
+*.wdp
+
+# Graphics Interchange Format
+*.gif
+
+# RAW
+*.raw
+
+# Web P
+*.webp
+
+# Portable Network Graphics
+*.png
+
+# Animated Portable Network Graphics
+*.apng
+
+# Multiple-image Network Graphics
+*.mng
+
+# Tagged Image File Format
+*.tiff
+*.tif
+
+# Scalable Vector Graphics
+*.svg
+*.svgz
+
+# Portable Document Format
+*.pdf
+
+# X BitMap
+*.xbm
+
+# BMP
+*.bmp
+*.dib
+
+# ICO
+*.ico
+
+# 3D Images
+*.3dm
+*.max
+
+# End of https://www.toptal.com/developers/gitignore/api/images
+
+# Created by https://www.toptal.com/developers/gitignore/api/audio
+# Edit at https://www.toptal.com/developers/gitignore?templates=audio
+
+### Audio ###
+*.aif
+*.iff
+*.m3u
+*.m4a
+*.mid
+*.mp3
+*.mpa
+*.ra
+*.wav
+*.wma
+*.ogg
+*.flac
+
+# End of https://www.toptal.com/developers/gitignore/api/audio
+
+**/.claude/settings.local.json
+{{- $extra := joinPath .chezmoi.homeDir ".config/machine-setup/extra/gitignore_global" }}
+{{- if stat $extra }}
+{{ output "cat" $extra | trim }}
+{{- end }}

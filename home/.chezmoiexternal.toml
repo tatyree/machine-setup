@@ -1,0 +1,27 @@
+# Third-party code chezmoi fetches instead of storing in this repo.
+
+[".oh-my-zsh"]
+    type = "git-repo"
+    url = "https://github.com/ohmyzsh/ohmyzsh.git"
+    refreshPeriod = "168h"
+    [".oh-my-zsh".clone]
+        args = ["--depth", "1"]
+
+[".config/wezterm/plugins/wez-tmux"]
+    type = "git-repo"
+    url = "https://github.com/sei40kr/wez-tmux.git"
+    refreshPeriod = "168h"
+
+[".vim/autoload/plug.vim"]
+    type = "file"
+    url = "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+    refreshPeriod = "168h"
+
+# Cloudflare's agent skills (Apache-2.0). ~/.claude/skills/<name> are symlinks
+# into this checkout.
+[".local/share/cloudflare-skills"]
+    type = "git-repo"
+    url = "https://github.com/cloudflare/skills.git"
+    refreshPeriod = "168h"
+    [".local/share/cloudflare-skills".clone]
+        args = ["--depth", "1"]

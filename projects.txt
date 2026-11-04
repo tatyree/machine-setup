@@ -1,0 +1,2 @@
+# Repos cloned by bootstrap.sh: <path relative to $HOME> <remote> <branch>
+sites/ace-step https://github.com/ace-step/ACE-Step-1.5.git main

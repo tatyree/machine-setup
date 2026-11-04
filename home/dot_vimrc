@@ -1,0 +1,205 @@
+call plug#begin('~/.vim/plugged')
+Plug 'chrisbra/csv.vim'
+Plug 'deepredsky/vim-rubocop'
+Plug 'delphinus/vim-firestore'
+Plug 'editorconfig/editorconfig-vim'
+Plug 'ervandew/supertab'
+Plug 'jeetsukumaran/vim-buffergator'
+Plug 'kien/ctrlp.vim'
+Plug 'lifepillar/vim-solarized8'
+Plug 'matze/vim-move'
+Plug 'mtth/scratch.vim'
+Plug 'mileszs/ack.vim'
+Plug 'NLKNguyen/papercolor-theme'
+Plug 'ntpeters/vim-better-whitespace'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'posva/vim-vue'
+Plug 'preservim/nerdcommenter'
+Plug 'preservim/nerdtree'
+Plug 'prettier/vim-prettier'
+Plug 'sheerun/vim-polyglot'
+Plug 'sjl/gundo.vim'
+Plug 'terrastruct/d2-vim'
+Plug 'tpope/vim-bundler'
+Plug 'tpope/vim-cucumber'
+Plug 'tpope/vim-dispatch'
+Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-fireplace'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rails'
+Plug 'tpope/vim-projectionist'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-salve'
+Plug 'tpope/vim-sensible'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-unimpaired'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'vim-syntastic/syntastic'
+Plug 'vim-test/vim-test'
+Plug 'wuelnerdotexe/vim-astro'
+Plug 'yuezk/vim-js'
+Plug 'lluchs/vim-c4script'
+
+
+filetype plugin indent on
+
+nnoremap <leader>fef :normal! gg=G``<CR>
+
+let g:NERDTreeQuitOnOpen = 1
+map <leader>n :NERDTreeToggle<CR>
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+let g:better_whitespace_enabled=1
+let g:strip_whitespace_on_save=1
+let g:strip_whitespace_confirm=0
+let g:show_spaces_that_precede_tabs=1
+
+if executable('ag')
+	let g:ackprg = 'ag --vimgrep'
+endif
+
+cnoreabbrev Ack Ack!
+nnoremap <Leader>f :Ack!<Space>
+
+autocmd FileType vue syntax sync fromstart
+
+let g:ctrlp_custom_ignore = {
+			\ 'dir' : '\.git$\|build$\|DS_Store\|node_modules\|dist\|target\|tmp\|.firebase\|public\|.next\|screenshots\|typescript' ,
+			\ 'file' : '\v\.(exe|dll|lib|orig)$'
+			\ }
+
+let g:move_key_modifier = 'C'
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [],'passive_filetypes': ['html'] }
+
+let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_ruby_checkers = ['rubocop']
+set backupdir=.backup/,~/.backup/,/tmp//
+set directory=.swp/,~/.swp/,/tmp//
+set undodir=.undo/,~/.undo/,/tmp//
+
+autocmd BufRead,BufNewFile *.md setlocal spell
+autocmd BufRead,BufNewFile *.txt setlocal spell
+set complete+=kspell
+set number
+let g:ctrlp_dont_split = 'nerdtree'
+
+:map <F2> :echo 'Current time is ' . strftime('%c')<CR>
+
+nmap <silent> <leader>tn :TestNearest<CR>
+nmap <silent> <leader>tf :TestFile <CR>
+nmap <silent> <leader>ts :TestSuite<CR>
+nmap <silent> <leader>tl :TestLast<CR>
+nmap <silent> <leader>tv :TestVisit<CR>
+
+nmap <leader>gb :Git blame<CR>
+nmap <leader>gq :Git<CR>
+nmap <leader>gd :Git diff<CR>
+nmap <leader>gl :Git log<CR>
+nmap <leader>gc :Git commit -v<CR>
+nmap <leader>gv :Git commit -av<CR>
+nmap <leader>gp :Git push<CR>
+
+nmap <leader>r :NERDTreeFind %<cr>
+nmap <C-o> :NERDTreeToggle %<CR>
+
+packloadall
+
+call plug#end()
+
+set background=dark
+"autocmd vimenter * ++nested colorscheme solarized8_high
+colorscheme PaperColor
+let g:airline_theme='minimalist'
+let g:airline_solarized_bg='dark'
+
+let g:airline#extensions#branch#displayed_head_limit = 7
+
+let test#ruby#rspec#options = '--format documentation'
+
+autocmd FileType ruby let b:dispatch = 'bin/rake'
+runtime macros/matchit.vim
+
+let g:vimrubocop_keymap = 0
+nmap <Leader>rc :RuboCop -a<CR>
+
+function! ConvertAndSortAllToCommaSeparatedList()
+    " Sort all lines in the file
+    %sort u
+
+    " Yank all lines in the file
+    %y
+
+    " Get the yanked lines into a list
+    let lines = split(@", '\n')
+
+    " Convert the sorted lines to a comma-separated list
+    let comma_separated = join(lines, ', ')
+
+    " Go to the end of the file and insert a blank line
+    normal! Go
+
+    " Insert the comma-separated list on a new line
+    call append(line('.'), comma_separated)
+
+    " Move the cursor to the newly inserted line
+    normal! G
+
+    " Copy the comma-separated list to the clipboard (for macOS)
+    call system('echo '.shellescape(comma_separated).' | pbcopy')
+
+    " Save the file after copying to the clipboard
+    write
+endfunction
+
+command! ClSort call ConvertAndSortAllToCommaSeparatedList()
+
+function! ConvertAndSortAllToSpaceSeparatedTwitterTags()
+    " Sort all lines in the file
+    %sort u
+
+    " Yank all lines in the file
+    %y
+
+    " Get the yanked lines into a list
+    let lines = split(@", '\n')
+
+    " Function to camel-case each phrase
+    function! CamelCasePhrase(phrase)
+        let words = split(a:phrase, '\s\+')
+        return '#' . tolower(words[0]) . join(map(slice(words, 1), 'toupper(strpart(v:val, 0, 1)) . tolower(strpart(v:val, 1))'), '')
+    endfunction
+
+    " Apply camel-case transformation and prefix with '#'
+    let twitter_tags = map(lines, 'CamelCasePhrase(v:val)')
+
+    " Convert the sorted lines to a space-separated list
+    let space_separated = join(twitter_tags, ' ')
+
+    " Go to the end of the file and insert a blank line
+    normal! Go
+
+    " Insert the space-separated list on a new line
+    call append(line('.'), space_separated)
+
+    " Move the cursor to the newly inserted line
+    normal! G
+
+    " Copy the space-separated list to the clipboard (for macOS)
+    call system('echo '.shellescape(space_separated).' | pbcopy')
+
+    " Save the file after copying to the clipboard
+    write
+endfunction
+
+command! ClSortTags call ConvertAndSortAllToSpaceSeparatedTwitterTags()
+
+command! OpenLine execute '!open ' . shellescape(getline('.')) . ' && tmux new-window -c ' . shellescape(fnamemodify(getline('.'), ':p:h'))
+

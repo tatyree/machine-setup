@@ -1,0 +1,45 @@
+-- transcribe-foreign.lua
+-- Ctrl+t: run transcribe-foreign on the current video.
+-- Skips audio and subtitle/translation files.
+
+local TRANSCRIBE_FOREIGN = "{{ .chezmoi.homeDir }}/.asdf/shims/transcribe-foreign"
+
+local SKIP_EXTS = {
+    -- audio
+    mp3 = true, wav = true, m4a = true, aac = true, flac = true,
+    ogg = true, opus = true, aiff = true, aif = true, wma = true,
+    -- subtitles / translations
+    vtt = true, srt = true, ass = true, ssa = true, sub = true, idx = true,
+}
+
+local function ext_of(path)
+    local e = (path or ""):match("%.([^%.]+)$")
+    return e and e:lower()
+end
+
+mp.add_key_binding("Ctrl+t", "transcribe-foreign", function()
+    local path = mp.get_property("path")
+    if not path or path == "" then
+        mp.osd_message("No file loaded", 2)
+        return
+    end
+
+    local ext = ext_of(path)
+    if ext and SKIP_EXTS[ext] then
+        mp.osd_message("Skipping ." .. ext, 2)
+        return
+    end
+
+    mp.osd_message("Transcribing: " .. (mp.get_property("filename") or path), 2)
+    mp.command_native_async({
+        name = "subprocess",
+        args = { TRANSCRIBE_FOREIGN, path },
+        playback_only = false,
+        capture_stdout = false,
+        capture_stderr = true,
+    }, function(success, result, err)
+        if not success or (result and result.status ~= 0) then
+            mp.msg.error("transcribe-foreign failed: " .. tostring((result and result.stderr) or err))
+        end
+    end)
+end)

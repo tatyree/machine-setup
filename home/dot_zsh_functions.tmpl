@@ -1,0 +1,31 @@
+# ~/.zsh_functions
+# Organized shell functions for zsh
+
+# Calculate checksums for files in current directory
+function checksum() {
+  xxh128sum $(find . -iname '*.pdf' -or -iname '*.heic' -or -iname '*.mp4' -or -iname '*.mov' -or -iname '*.WAV' -or -iname '*.jpg' -or -iname '*.png' 2>/dev/null) > ${PWD##*/}.xxh128
+}
+
+function find_files() {
+  local dir="${1:-.}"
+  local pattern="$2"
+  local size="${3:-+1M}"
+  
+  find "$dir" -type f -size "$size" -not -name '.DS_Store' -name "$pattern" | sort
+}
+
+# Quick backup function
+function quick_backup() {
+  local source="$1"
+  local dest="$2"
+  local name="${3:-backup}"
+  local date_str=$(date +"%Y-%m-%dT%H:%M:%S")
+  
+  if [[ -z "$source" || -z "$dest" ]]; then
+    echo "Usage: quick_backup <source> <destination> [name]"
+    return 1
+  fi
+  
+  rsync --exclude-from '{{ .chezmoi.homeDir }}/.borg-exclude' --progress -avt "$source" "$dest/${name}-${date_str}"
+  echo "Backup completed: $dest/${name}-${date_str}"
+}
