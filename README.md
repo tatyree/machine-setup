@@ -29,14 +29,16 @@ On the first run, any existing file chezmoi is about to replace (`~/.zshrc`,
 `<file>.pre-machine-setup` first. On later runs chezmoi asks before replacing
 a file you have edited since it last wrote it.
 
-Options: `--skip-projects`, `--skip-macos`, `--skip-mas`.
+Options: `--skip-projects`, `--skip-macos`, `--skip-mas`, `--skip-1password`.
 
 Mac App Store apps install last, one at a time with progress, after the
 App Store sign-in (iCloud can stay off). Xcode alone is a long download.
 
 ## 1Password
 
-Install and sign in to the 1Password app, then in Settings > Developer turn on
+Optional. Bootstrap asks once; type `s` to skip, or pass `--skip-1password`.
+Without it, `~/.ssh/config` uses the Keychain and `~/.ssh/id_rsa`. To use it,
+install and sign in to the 1Password app, then in Settings > Developer turn on
 **Use the SSH agent** and **Integrate with 1Password CLI**. SSH keys stay in
 1Password; `~/.ssh/config` points at its agent.
 

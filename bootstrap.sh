@@ -6,17 +6,20 @@
 #   --skip-projects   don't clone the repos in projects.txt
 #   --skip-macos      don't apply macos.sh
 #   --skip-mas        don't install the Mac App Store apps (the mas lines in Brewfile)
+#   --skip-1password  don't ask about 1Password; use the Keychain SSH setup
 set -euo pipefail
 
 REPO_DIR="$(cd "$(dirname "$0")" && pwd)"
 SKIP_PROJECTS=0
 SKIP_MACOS=0
 SKIP_MAS=0
+SKIP_1PASSWORD=0
 while [ $# -gt 0 ]; do
   case "$1" in
     --skip-projects) SKIP_PROJECTS=1 ;;
     --skip-macos) SKIP_MACOS=1 ;;
     --skip-mas) SKIP_MAS=1 ;;
+    --skip-1password) SKIP_1PASSWORD=1 ;;
     *) echo "Unknown option: $1" >&2; exit 2 ;;
   esac
   shift
@@ -47,16 +50,28 @@ step "Brewfile (without App Store apps)"
 grep -v '^mas ' "$REPO_DIR/Brewfile" | brew bundle --file=- --no-upgrade \
   || warn "brew bundle had failures; re-run 'brew bundle --file=$REPO_DIR/Brewfile' to see them"
 
-# 4. 1Password (SSH agent)
+# 4. 1Password (SSH agent). Optional: without it, ~/.ssh/config falls back
+#    to the Keychain and ~/.ssh/id_rsa. stdin is closed on every op call so
+#    op can never stop to ask its own questions.
 step "1Password"
-if ! op vault list >/dev/null 2>&1; then
-  pause "Open 1Password and sign in. In Settings > Developer, turn on 'Use the SSH agent' and 'Integrate with 1Password CLI'."
-fi
-if op vault list >/dev/null 2>&1; then
+op_ready() { op whoami </dev/null >/dev/null 2>&1 || op vault list </dev/null >/dev/null 2>&1; }
+ONEPASSWORD=false
+if [ "$SKIP_1PASSWORD" -eq 1 ]; then
+  echo "  skipped (--skip-1password)"
+elif op_ready; then
   ONEPASSWORD=true
-else
-  ONEPASSWORD=false
-  warn "1Password CLI not signed in: the SSH agent config was skipped. Sign in and re-run bootstrap.sh"
+elif [ -t 0 ]; then
+  echo "  1Password is optional. To use it: open the 1Password app, sign in, and in"
+  echo "  Settings > Developer turn on 'Use the SSH agent' and 'Integrate with 1Password CLI'."
+  read -r -p "  Press Enter once that's done, or type s to skip: " answer
+  if [ "$answer" != s ] && [ "$answer" != S ] && op_ready; then
+    ONEPASSWORD=true
+  fi
+fi
+if [ "$ONEPASSWORD" = true ]; then
+  echo "  1Password CLI is signed in; using its SSH agent"
+elif [ "$SKIP_1PASSWORD" -eq 0 ]; then
+  warn "1Password not used: ~/.ssh/config uses the Keychain fallback. Re-run bootstrap.sh after signing in to switch."
 fi
 
 # 5. Dotfiles
