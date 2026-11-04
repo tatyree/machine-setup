@@ -47,7 +47,9 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 # 3. Packages. App Store apps are installed separately at the end (step 12),
 #    because big ones like Xcode download for a long time with no output here.
 step "Brewfile (without App Store apps)"
-grep -v '^mas ' "$REPO_DIR/Brewfile" | brew bundle --file=- --no-upgrade \
+# mas itself is also deferred: off macOS 15 / Apple Silicon it has no bottle and
+# compiles from source, which brew bundle shows as a silent "Installing mas".
+grep -v -e '^mas ' -e '^brew "mas"' "$REPO_DIR/Brewfile" | brew bundle --file=- --no-upgrade \
   || warn "brew bundle had failures; re-run 'brew bundle --file=$REPO_DIR/Brewfile' to see them"
 
 # 4. 1Password (SSH agent). Optional: without it, ~/.ssh/config falls back
@@ -153,6 +155,10 @@ fi
 if [ "$SKIP_MAS" -eq 0 ]; then
   step "Mac App Store apps"
   pause "Sign in to the App Store app (Store > Sign In; iCloud can stay off)."
+  if ! command -v mas >/dev/null 2>&1; then
+    echo "  installing the mas tool (may compile from source for a few minutes)..."
+    brew install mas || warn "Could not install mas; App Store apps skipped"
+  fi
   installed_mas="$(mas list 2>/dev/null | awk '{print $1}')"
   while IFS= read -r line; do
     name="$(sed -E 's/^mas "([^"]+)".*/\1/' <<<"$line")"
@@ -163,7 +169,7 @@ if [ "$SKIP_MAS" -eq 0 ]; then
     fi
     echo "  installing $name ($id)..."
     mas install "$id" || warn "App Store install failed for $name: open it in the App Store and click Get once, then re-run with 'mas install $id'"
-  done < <(grep '^mas ' "$REPO_DIR/Brewfile")
+  done < <(command -v mas >/dev/null 2>&1 && grep '^mas ' "$REPO_DIR/Brewfile")
 fi
 
 step "Done"
